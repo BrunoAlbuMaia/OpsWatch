@@ -1,0 +1,11 @@
+fastapi[all]
+uvicorn[standard]
+python-decouple
+psutil
+apscheduler
+pymssql
+pyautogui
+requests
+pywin32
+webdriver_manager
+selenium
