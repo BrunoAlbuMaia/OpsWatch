@@ -1,0 +1,7 @@
+fastapi[all]
+uvicorn[standard]
+python-decouple
+pymssql
+requests
+websockets
+asyncio
