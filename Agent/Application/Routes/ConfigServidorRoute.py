@@ -16,5 +16,5 @@ __controller = ConfigurarServidorController()
 
 @router.on_event("startup")
 async def start_scheduler():
-    await __controller.configurar_servidor_automaticamente()
+    return await __controller.configurar_servidor_automaticamente()
 

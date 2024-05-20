@@ -16,6 +16,7 @@ nrServidorId  INT NOT NULL,
 jsonConfig VARCHAR(MAX),
 dtCriacao DATETIME,
 dtAtualizacao DATETIME,
+usuarioCriacao VARCHAR(20),
 usuarioAlteracao VARCHAR(20),
 FOREIGN KEY (nrServidorId) REFERENCES Servidores(nrServidorId)
 )

@@ -38,7 +38,7 @@ class ConfigServidorService(IConfigServidorService):
                 "nmIpServidor": ipv4_address,
                 "nmDescricao": "",
                 "urlWebsocketServidor": f"ws://{ipv4_address}:{config("port")}/Servidores/ws",
-                "urlWebSocketJobs": f"ws://{hostname}:{config("port")}/Jobs/ws",
+                "urlWebSocketJobs": f"ws://{ipv4_address}:{config("port")}/Jobs/ws",
                 "flAtivo": True
 
             }
@@ -53,4 +53,4 @@ class ConfigServidorService(IConfigServidorService):
                 raise Exception(f"Erro ao enviar configuração. Status code: {response.status_code}")
             
         except Exception as ex:
-            raise Exception(str(ex))
+            return False

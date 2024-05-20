@@ -1,9 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Dict,Any
+from Domain.Entities.JobsEntity import JobsEntity
 
 class IJobsRepository:
     @abstractmethod
     async def consultar(self,nrServidorId:int):
+        pass
+
+    @abstractmethod
+    async def registrarJson(self,dados:JobsEntity):
         pass
 
     @abstractmethod

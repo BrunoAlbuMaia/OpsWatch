@@ -1,3 +1,5 @@
 **/__pycache__/
 **/venv/
 **/app.log
+**/build_tools/dist
+**/build_tools/build

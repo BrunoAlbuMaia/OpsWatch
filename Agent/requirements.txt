@@ -1,5 +1,8 @@
 fastapi[all]
 uvicorn[standard]
+starlette
+pydantic
+
 python-decouple
 psutil
 apscheduler
@@ -9,3 +12,8 @@ requests
 pywin32
 webdriver_manager
 selenium
+
+pyinstaller
+pyinstaller-hooks-contrib
+
+
