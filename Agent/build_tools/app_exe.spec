@@ -6,7 +6,7 @@ block_cipher = None
 import os
 
 # Defina o caminho absoluto para o diretório raiz do projeto
-project_root = 'C:/Users/bruno.maia/source/repos/gitlab/fbbix/apiagente'  # Ajuste conforme necessário
+project_root = '..'  # Ajuste conforme necessário
 
 # Adiciona todos os módulos do projeto
 pathex = [
@@ -24,11 +24,17 @@ hiddenimports = [
     'Service',
 ]
 
+datas = [
+    (os.path.join(project_root, 'JobsConfig.json'), '.'),
+    (os.path.join(project_root, 'configuration.json'), '.'),
+    (os.path.join(project_root, '.env'), '.')
+]
+
 a = Analysis(
     [os.path.join(project_root, 'app.py')],  # Atualizado para refletir o novo ponto de entrada
     pathex=pathex,  # Certifique-se de que o diretório raiz está no path
     binaries=[],
-    datas=[],
+    datas=datas,
     hiddenimports=hiddenimports,  # Inclua os módulos específicos aqui
     hookspath=[os.path.join(project_root, 'build_tools', 'extra-hooks')],  # Caminho para o diretório de hooks
     runtime_hooks=[],

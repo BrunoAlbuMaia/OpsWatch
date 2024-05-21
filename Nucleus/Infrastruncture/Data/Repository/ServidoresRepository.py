@@ -15,9 +15,9 @@ class ServidoresRepository(IServidoresRepository):
             query = '''
                     SELECT *
                     FROM Servidores
-                    WHERE nmServidor = %s
+                    WHERE nmServidor = ?
                     '''
-            values = (hostname,)
+            values = (hostname)
             cursor.execute(query,values)
             resultado = cursor.fetchone()
             return resultado
@@ -32,7 +32,7 @@ class ServidoresRepository(IServidoresRepository):
             query = '''
                     INSERT INTO Servidores
                     (nmServidor,nmIpServidor,nmDescricao,urlWebsocketServidor,urlwebSocketJobs)
-                    VALUES(%s,%s,%s,%s,%s)
+                    VALUES(?,?,?,?,?)
                     '''
             values = (dados.nmServidor,dados.nmIpServidor,dados.nmDescricao,dados.urlWebsocketServidor,dados.urlWebSocketJobs)
 
@@ -52,13 +52,13 @@ class ServidoresRepository(IServidoresRepository):
         try:
             query = '''
                     UPDATE Servidores
-                    SET nmServidor = %s,
-                    nmIpServidor = %s,
-                    nmDescricao = %s,
-                    urlWebSocketServidor = %s,
-                    urlWebSocketJobs = %s,
-                    flAtivo = %s
-                    WHERE nrServidorId = %s
+                    SET nmServidor = ?,
+                    nmIpServidor = ?,
+                    nmDescricao = ?,
+                    urlWebSocketServidor = ?,
+                    urlWebSocketJobs = ?,
+                    flAtivo = ?
+                    WHERE nrServidorId = ?
                     '''
             values = (dados.nmServidor,
                       dados.nmIpServidor,
