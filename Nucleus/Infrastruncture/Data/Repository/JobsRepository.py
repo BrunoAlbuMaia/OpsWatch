@@ -13,7 +13,7 @@ class JobsRepository(IJobsRepository):
         cursor = self._db.connect(as_dict=True)
         try:
             query = '''SELECT jsonConfig FROM Jobs
-                        WHERE nrServidorId = %s'''
+                        WHERE nrServidorId = ?'''
             values = (nrServidorId,)
             cursor.execute(query,values)
             resultado = cursor.fetchone()
@@ -32,7 +32,7 @@ class JobsRepository(IJobsRepository):
             query = '''
                     INSERT INTO 
                     Jobs (nrServidorId,JsonConfig,dtCriacao,usuarioCriacao)
-                    WHERE (%s,%s,%s,%s)
+                    WHERE (?,?,?,?)
                     '''
             values = (dados.nrServidorId,dados.jsonConfig,dados.dtCriacao,dados.usuarioCriacao,)
             cursor.execute(query,values)
