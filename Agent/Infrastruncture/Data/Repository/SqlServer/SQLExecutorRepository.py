@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
 
-from Infrastruncture.Data.Repository.ISQLExecutorRepository import ISQLExecutorRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.ISQLExecutorRepository import ISQLExecutorRepository
 from Infrastruncture.Data.Context.dbSessionDinamico import DbSessionDinamico
 
 class SQLExecutorRepository(ISQLExecutorRepository):

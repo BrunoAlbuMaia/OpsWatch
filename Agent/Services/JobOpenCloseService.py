@@ -1,5 +1,5 @@
 from Domain.Interface.IJobBaseService import IJobBaseService
-from Infrastruncture.Data.Repository.ISQLExecutorRepository import ISQLExecutorRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.ISQLExecutorRepository import ISQLExecutorRepository
 
 from typing import Dict,Any,Type
 import time

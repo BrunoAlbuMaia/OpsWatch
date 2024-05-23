@@ -22,6 +22,12 @@ async def consultar_jobs_agendados():
         return JSONResponse(content={"mensagem":str(ex)},status_code=200)
 
 
+@router.get('/api/executar',
+            summary='Verificar todos os jobs')
+async def consultar_jobs():
+    job_data = {"teste": 10}
+    jobs = await __controller.executar_job_especifico(job_data)
+    return jobs
 
 @router.post('/api/executar/{id}',
                 summary="Roda um jobs especifico apenas passando o ID")
@@ -31,6 +37,7 @@ async def rodarJobID(id:int):
     except Exception as ex:
         return JSONResponse(content={'mensagem':str(ex)},status_code=404)
     
+
 @router.patch('/api/sincronizar')
 async def sincronizar_jobs():
     try:

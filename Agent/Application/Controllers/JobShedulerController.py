@@ -16,6 +16,7 @@ class JobShedulerController:
         self.jobService = self.injection.jobService
         self.jobOpenClose = self.injection.jobOpenClose
         self.automacaoweb = self.injection.automacaoWeb
+        self.plugin_manager_service = self.injection.pluginManager
 
     async def start(self):
         if not self.scheduler.running:
@@ -85,3 +86,9 @@ class JobShedulerController:
                 await self.jobOpenClose.execute_job(job=res)
         except Exception as ex:
             raise Exception(str(ex))
+
+    
+
+    async def executar_job_especifico(self, job_data):
+        await self.plugin_manager_service.add_plugin_manager('open_close_app')
+        result = await self.plugin_manager_service.execute_plugin_hook("open_close_app", "executar_job_especifico", job_data)

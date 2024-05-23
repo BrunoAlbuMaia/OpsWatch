@@ -11,6 +11,7 @@ from Application.Routes.JobsRoute import router as job
 from Application.Routes.JobsSchedulerRoute import router as jobSheduler
 from Application.Routes.MonitoraServidorRoute import router as monitorarServidor
 from Application.Routes.ConfigServidorRoute import router as configurarServidor
+from Application.Routes.PluginRoute import router as plugin
 from datetime import datetime
 # Configuração do logger
 logging.basicConfig(filename='app.log', level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
@@ -39,5 +40,6 @@ app.include_router(job,prefix='/Jobs')
 app.include_router(jobSheduler,prefix='/JobScheduler')
 app.include_router(monitorarServidor,prefix='/MonitorarServidor')
 app.include_router(configurarServidor,prefix='/ConfigurarServidor')
+app.include_router(plugin,prefix='/Plugin')
 
 

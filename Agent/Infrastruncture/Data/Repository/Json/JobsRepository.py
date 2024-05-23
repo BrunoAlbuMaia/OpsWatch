@@ -6,7 +6,7 @@ from decouple import config
 from typing import Dict,Any
 
 from Domain.Entites.jobEntity import Job
-from Infrastruncture.Data.Repository.IJobsRepository import IJobsRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IJobsRepository import IJobsRepository
 
 class JobsRepository(IJobsRepository):
     file_path = config('file_pathJOBS')

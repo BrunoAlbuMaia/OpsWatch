@@ -50,3 +50,21 @@ class DbSession:
                 self.connection.close()
         except Exception as ex:
             return f"Erro ao fechar conexão: {ex}"
+    def query_as_dict(self, query: str,values = None):
+        cursor = self.connect()
+        try:
+            if values is not None:
+                cursor.execute(query, values)
+            else:
+                cursor.execute(query)
+            
+            
+
+            columns = [column[0] for column in cursor.description]
+            results = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+            return results[0]
+        except Exception as ex:
+            return f"Erro ao executar a consulta: {ex}"
+        finally:
+            self.close()

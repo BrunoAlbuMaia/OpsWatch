@@ -8,8 +8,8 @@ import requests as rs
 from decouple import config
 from Domain.Entites.ConfigServidorEntity import ConfigServidorEntity
 from Domain.Interface.IConfigServidorService import IConfigServidorService
-from Infrastruncture.Data.Repository.IConfigServidorRepository import IConfigServidorRepository
-from Infrastruncture.Data.Repository.ConfigServidorRepository import ConfigServidorRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IConfigServidorRepository import IConfigServidorRepository
+from Infrastruncture.Data.Repository.Json.ConfigServidorRepository import ConfigServidorRepository
 
 
 class ConfigServidorService(IConfigServidorService):

@@ -7,14 +7,11 @@ from typing import Type,Dict,Any
 from Domain.Entites.jobEntity import Job
 
 from Domain.Interface.IJobsService import IJobsService
-from Infrastruncture.Data.Repository.ISQLExecutorRepository import ISQLExecutorRepository
-from Infrastruncture.Data.Repository.IJobsRepository import IJobsRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.ISQLExecutorRepository import ISQLExecutorRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IJobsRepository import IJobsRepository
 
-from Infrastruncture.Data.Repository.JobsRepository import JobsRepository
-from Infrastruncture.Data.Repository.SQLExecutorRepository import SQLExecutorRepository
-
-from Infrastruncture.CrossCutting.pyautoguiComandos import executar_comandos
-from Infrastruncture.CrossCutting.AutomacaoWeb import automacao
+from Infrastruncture.Data.Repository.Json.JobsRepository import JobsRepository
+from Infrastruncture.Data.Repository.SqlServer.SQLExecutorRepository import SQLExecutorRepository
 
 
 class JobsService(IJobsService):

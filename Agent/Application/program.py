@@ -7,20 +7,22 @@ from Domain.Interface.IConfigServidorService import IConfigServidorService
 from Domain.Interface.IJobsService import IJobsService
 from Domain.Interface.IMonitorarServidorService import IMonitorarServidorService
 from Domain.Interface.IJobBaseService import IJobBaseService
+from Domain.Interface.IPluginManagerService import IPluginManagerService
 
 from Services.MonitorarServidorService import MonitorarServidorService
 from Services.ConfigServidorService import ConfigServidorService
 from Services.JobsService import JobsService
 from Services.AutomacaoWebService import AutomacaoWebService
 from Services.JobOpenCloseService import JobOpenCloseService
+from Services.PluginManagerService import PluginManagerService
 
 # CAMADA DE BANCO DE DADOS
-from Infrastruncture.Data.Repository.IJobsRepository import IJobsRepository
-from Infrastruncture.Data.Repository.JobsRepository import JobsRepository
-from Infrastruncture.Data.Repository.IConfigServidorRepository import IConfigServidorRepository
-from Infrastruncture.Data.Repository.ConfigServidorRepository import ConfigServidorRepository
-from Infrastruncture.Data.Repository.ISQLExecutorRepository import ISQLExecutorRepository
-from Infrastruncture.Data.Repository.SQLExecutorRepository import SQLExecutorRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IJobsRepository import IJobsRepository
+from Infrastruncture.Data.Repository.Json.JobsRepository import JobsRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IConfigServidorRepository import IConfigServidorRepository
+from Infrastruncture.Data.Repository.Json.ConfigServidorRepository import ConfigServidorRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.ISQLExecutorRepository import ISQLExecutorRepository
+from Infrastruncture.Data.Repository.SqlServer.SQLExecutorRepository import SQLExecutorRepository
 
 #CONECTION with DATA BASE
 from Infrastruncture.Data.Context.dbSessionDinamico import DbSessionDinamico
@@ -39,3 +41,4 @@ class DependencyContainer:
 
         self.jobOpenClose: IJobBaseService = JobOpenCloseService(__SQLRepository)
         self.automacaoWeb:IJobBaseService = AutomacaoWebService()
+        self.pluginManager:IPluginManagerService = PluginManagerService()

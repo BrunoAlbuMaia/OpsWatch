@@ -15,5 +15,4 @@ selenium
 
 pyinstaller
 pyinstaller-hooks-contrib
-
-
+pluggy
