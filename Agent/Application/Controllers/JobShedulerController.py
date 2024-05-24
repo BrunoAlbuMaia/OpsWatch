@@ -89,6 +89,18 @@ class JobShedulerController:
 
     
 
-    async def executar_job_especifico(self, job_data):
-        await self.plugin_manager_service.add_plugin_manager('open_close_app')
-        result = await self.plugin_manager_service.execute_plugin_hook("open_close_app", "executar_job_especifico", job_data)
+    async def executar_job_especifico(self, id:int):
+        try:
+            #vamos trazer o JSON desse cara, e enviar la pro PLUGIN
+            json_data = await self.jobService.consultar_jobs_id(id)
+            
+
+            for plugin_name, plugin_details  in json_data['plugins'].items():
+                nome_arquivo_hooks = plugin_details['nome_arquivo_hooks']
+                nome_arquivo_plugin = plugin_details["nome_arquivo_plugin"]
+                config = plugin_details['config']
+                await self.plugin_manager_service.add_plugin_manager(nome_arquivo_hooks=nome_arquivo_hooks,nome_arquivo_plugin=nome_arquivo_plugin)
+
+                result = await self.plugin_manager_service.execute_plugin_hook(nome_arquivo_plugin, plugin_name, config)
+        except Exception as ex:
+            raise Exception(str(ex))

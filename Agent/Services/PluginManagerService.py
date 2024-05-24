@@ -6,8 +6,8 @@ class PluginManagerService(IPluginManagerService):
     def __init__(self):
         self.plugin_managers = {}
 
-    async def add_plugin_manager(self, name):
-        self.plugin_managers[name] = PluginManager(nome_arquivo='hooks',hook_name=name)
+    async def add_plugin_manager(self,  nome_arquivo_hooks, nome_arquivo_plugin):
+        self.plugin_managers[nome_arquivo_plugin] = PluginManager(nome_arquivo_plugin=nome_arquivo_plugin,nome_arquivo_hooks=nome_arquivo_hooks)
 
 
     async def upload_plugin(self, name, file):

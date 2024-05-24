@@ -6,11 +6,11 @@ import os
 DEFAULT_PLUGIN_DIRECTORY = 'Infrastruncture/CrossCutting/plugins'
 
 class PluginManager:
-    def __init__(self, hook_name,nome_arquivo, plugin_directory=DEFAULT_PLUGIN_DIRECTORY):
+    def __init__(self, nome_arquivo_hooks,nome_arquivo_plugin, plugin_directory=DEFAULT_PLUGIN_DIRECTORY):
         self.plugin_directory = plugin_directory
-        self.hook_name = hook_name
-        self.plugin_manager = pluggy.PluginManager(self.hook_name)
-        hooks = self.load_hooks(nome_arquivo)
+        self.nome_arquivo_plugin = nome_arquivo_plugin
+        self.plugin_manager = pluggy.PluginManager(self.nome_arquivo_plugin)
+        hooks = self.load_hooks(nome_arquivo_hooks)
         self.plugin_manager.add_hookspecs(hooks)
         self.load_plugins()
 
