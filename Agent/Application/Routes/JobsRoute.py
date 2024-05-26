@@ -22,7 +22,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             resultado = await __controller.websocket_job(websocket,connections)
-           
 
             if resultado != last_state:
                 last_state = resultado
@@ -37,8 +36,6 @@ async def websocket_endpoint(websocket: WebSocket):
     finally:
         connections.remove(websocket)
   
-
-
 
 #ENDPOINTs    
 @router.get('/api/jobs',

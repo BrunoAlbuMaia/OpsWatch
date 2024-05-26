@@ -6,10 +6,9 @@ router  = APIRouter(tags=['JobsScheduler'])
 __controller = JobShedulerController()
 
 
-# @router.on_event("startup")
-# async def start_scheduler():
-#     return await __controller.start()
-
+@router.on_event("startup")
+async def start_scheduler():
+    return await __controller.start()
 
 
 @router.get('/api/agendados',
@@ -22,19 +21,12 @@ async def consultar_jobs_agendados():
         return JSONResponse(content={"mensagem":str(ex)},status_code=200)
 
 
-# @router.get('/api/executar',
-#             summary='Verificar todos os jobs')
-# async def consultar_jobs():
-#     job_data = {"teste": 10}
-#     jobs = await __controller.executar_job_especifico(job_data)
-#     return jobs
-
 @router.post('/api/executar/{id}',
                 summary="Roda um jobs especifico apenas passando o ID")
 async def rodarJobID(id:int):
     try:
         resultado = await __controller.executar_job_especifico(id)
-        return JSONResponse(content={'mensagem':await __controller.executarJOB(id=id)},status_code=200)
+        return JSONResponse(content={'mensagem':resultado},status_code=200)
     except Exception as ex:
         return JSONResponse(content={'mensagem':str(ex)},status_code=404)
     

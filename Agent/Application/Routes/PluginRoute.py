@@ -1,31 +1,31 @@
 from fastapi import APIRouter, UploadFile, File
-import os
-import shutil
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import HTTPException
+from Application.Controllers.PluginController import PluginController
 
 
 router = APIRouter(tags=['Plugin'])
+_controller = PluginController()
 
+@router.post("/api/v1/upload", summary="Adiciona um novo plugin ao seu sistema")
+async def upload_plugin(hook_file: UploadFile = File(...), plugin_file: UploadFile = File(...)):
+    try:
+        plugin_filename = plugin_file.filename
+        hook_filename = hook_file.filename
 
-@router.post("/upload-plugin/")
-async def upload_plugin(file: UploadFile = File(...)):
-    plugin_directory = 'Infrastructure/CrossCutting/plugins/plugins'
-    plugin_path = os.path.join(plugin_directory, file.filename)
-    with open(plugin_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        if not plugin_filename.endswith('_plugin.py'):
+            raise HTTPException(status_code=400, detail="Nome do arquivo do plugin invalido")
+        if not hook_filename.endswith('__hooks.py'):
+            raise HTTPException(status_code=400, detail="Nome do arquivo do hooks invalido")
+        
+        resultado = await _controller.upload_plugin(hook_file, plugin_file)
+
+        return JSONResponse(content=resultado, status_code=200)
     
-    # Recarregar plugins após upload
-    # job_service.plugin_manager.load_plugins()
-    return {"message": "Plugin uploaded and loaded successfully"}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))
+    
 
-# @router.get("/execute-job")
-# async def execute_job():
-#     try:
-#         configDetalhes = {
-#             # Exemplo de configuração detalhada
-#         }
-#         plugin_manager.execute_plugins('on_pre_exec', configDetalhes)
-#         # Lógica de execução do trabalho principal
-#         plugin_manager.execute_plugins('on_post_exec', configDetalhes)
-#         return {"message": "Job executado com sucesso"}
-#     except Exception as ex:
-#         return {"error": str(ex)}
+@router.patch("api/v1/update", summary="Atualiza o seu plugin existente, é importante que você envie com o mesmo nome do plugin que deseja alterar")
+async def upload_plugin(new_hook_file: UploadFile = File(...), new_plugin_file: UploadFile = File(...)):
+    pass

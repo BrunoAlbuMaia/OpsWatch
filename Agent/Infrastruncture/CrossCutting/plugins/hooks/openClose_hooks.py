@@ -2,7 +2,7 @@
 
 import pluggy
 
-hookspec = pluggy.HookspecMarker("open_close_app")
+hookspec = pluggy.HookspecMarker("openClose")
 
 @hookspec
 async def abrir_exe(job_data):

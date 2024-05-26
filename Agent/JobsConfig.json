@@ -2,60 +2,28 @@
     "jobs": [
         {
             "id": 1,
-            "nomeJOB": "Abrir e fechar monitoramento TOPAcesso",
-            "tipo": "open_close",
-            "status": true,
-            "detalhes": {
-                "tempExecucao": "0 4 * * *",
-                "ultAlteracao": "26/03/2024 05:30",
-                "caminhoExecutavel": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsCalculator_11.2401.0.0_x64__8wekyb3d8bbwe\\CalculatorApp.exe",
-                "nomeExecutavel": "CalculatorApp.exe",
-                "tmpEsperaSegundos": 1,
-                "preExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
-                },
-                "posExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
-                },
-                "configDB": {
-                    "usuario": "sisdbFBTotvs",
-                    "senha": "515d3f3t0tv53kp",
-                    "database": "dbfbtopacesso",
-                    "serve": "SRVNAGbd01"
-                },
-                "comandos_pos_fechamento": [],
-                "comando_pos_abertura": []
-            }
-        },
-        {
-            "id": 2,
             "nomeJOB": "Abrir e fechar monitoramento chrome",
             "cron_time":"0 4 * * *",
             "status": true,
             "plugins":{
                  
+                "fechar_exe":{
+                    "nome_arquivo_plugin":"openClose",
+                    "nome_arquivo_hooks":"openClose_hooks",
+                    "config":{
+                        "nome_exe":"chome.exe",
+                        "description":"Esse é o nome do executavel que ele vai fechar, pela tela de GERENCIADOR DE TAREFAS"
+                    }
+                },
                 "abrir_exe":{
-                    "nome_arquivo_plugin": "open_close_app",
-                    "nome_arquivo_hooks":"hooks",
+                    "nome_arquivo_plugin": "openClose",
+                    "nome_arquivo_hooks":"openClose_hooks",
                     "config":{
                         "caminho_exe":"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
                         "description":"Caminho executavel para o arquivo google.exe"
                     }
-                },
-                "fechar_exe":{
-                    "nome_arquivo_plugin":"open_close_app",
-                    "nome_arquivo_hooks":"hooks",
-                    "config":{
-                        "nome_servico":"chrome.exe",
-                        "description":"Esse é o nome do executavel que ele vai fechar, pela tela de GERENCIADOR DE TAREFAS"
-                    }
                 }
-
-
             }
-        
         }
     ]
 }

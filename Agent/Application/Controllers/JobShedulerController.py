@@ -30,7 +30,7 @@ class JobShedulerController:
                 job_id = res['nomeJOB']
                 if res['status'] == True:
                 
-                    tempo_execucao = str(res['detalhes']["tempExecucao"])
+                    tempo_execucao = str(res["cron_time"])
                     
                     existing_job =  self.scheduler.get_job(job_id)
                     if existing_job:
@@ -38,10 +38,10 @@ class JobShedulerController:
                     
                     
                     self.scheduler.add_job(
-                            self.executarJOB,
+                            self.executar_job_especifico,
                             CronTrigger.from_crontab(tempo_execucao),
                             id=job_id,
-                            args=(res,)
+                            args=(res['id'],)
                     )
                 else:
                     existing_job =  self.scheduler.get_job(job_id)
@@ -51,7 +51,6 @@ class JobShedulerController:
             except Exception as ex:
                 raise Exception(str(ex))
 
-    
     async def job_agendados(self):
         resultado = self.scheduler.get_jobs()
         if len(resultado) == 0:
@@ -86,14 +85,12 @@ class JobShedulerController:
                 await self.jobOpenClose.execute_job(job=res)
         except Exception as ex:
             raise Exception(str(ex))
-
     
-
     async def executar_job_especifico(self, id:int):
         try:
             #vamos trazer o JSON desse cara, e enviar la pro PLUGIN
             json_data = await self.jobService.consultar_jobs_id(id)
-            
+            retornos = []
 
             for plugin_name, plugin_details  in json_data['plugins'].items():
                 nome_arquivo_hooks = plugin_details['nome_arquivo_hooks']
@@ -102,5 +99,10 @@ class JobShedulerController:
                 await self.plugin_manager_service.add_plugin_manager(nome_arquivo_hooks=nome_arquivo_hooks,nome_arquivo_plugin=nome_arquivo_plugin)
 
                 result = await self.plugin_manager_service.execute_plugin_hook(nome_arquivo_plugin, plugin_name, config)
+
+
+                retornos.append({"plugin":"plugin_name", "result": result})
+
+            return retornos
         except Exception as ex:
             raise Exception(str(ex))

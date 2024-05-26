@@ -7,6 +7,7 @@ import win32evtlog
 import win32evtlogutil
 import win32con
 
+import subprocess
 import time
 import requests
 import psutil
@@ -104,3 +105,35 @@ class MonitorarServidorService(IMonitorarServidorService):
         
         # Se o processo não estiver em execução
         return False
+    async def verificar_top_consumidores_ram(self, top_n=5):
+        """
+        Verifica os processos que mais consomem RAM.
+        
+        :param top_n: número de processos a serem listados.
+        :return: uma lista com os processos que mais consomem RAM.
+        """
+        processos = []
+        for proc in psutil.process_iter(['pid', 'name', 'memory_percent']):
+            try:
+                pinfo = proc.info
+                processos.append(pinfo)
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+
+        # Ordena os processos pelo percentual de memória utilizada
+        processos = sorted(processos, key=lambda p: p['memory_percent'], reverse=True)
+
+        # Retorna os top_n processos
+        return processos[:top_n]
+    async def executar_comando(comando):
+        """
+        Executa um comando no cmd e retorna a saída.
+        
+        :param comando: Comando a ser executado.
+        :return: Saída do comando.
+        """
+        try:
+            resultado = subprocess.run(comando, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            return resultado.stdout
+        except subprocess.CalledProcessError as e:
+            return f"Erro ao executar o comando: {e.stderr}"

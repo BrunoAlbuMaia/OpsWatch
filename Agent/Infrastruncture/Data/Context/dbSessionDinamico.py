@@ -3,18 +3,16 @@ from decouple import config
 
 class DbSessionDinamico:
 
-    async def connect(self,conexaoDB) -> pymssql.Cursor:
-        self.__server = conexaoDB['serve']
-        self.__database = conexaoDB['database']
-        self.__user = conexaoDB['usuario']
-        self.__passwords = conexaoDB['senha']
+    async def connect(self,conexaoDB,as_dict: bool | None = None) -> pymssql.Cursor:
         try:
-            self.connection = pymssql.connect(server=self.__server,
-                            database=self.__database,
-                            user=self.__user,
-                            password=self.__passwords
-                        )
-            return self.connection.cursor()
+            connection_params = {}
+            for param in self.conexaoDB.split(";"):
+                key, value = param.split("=")
+                connection_params[key.strip()] = value.strip()
+
+            self.connection = pymssql.connect(**connection_params)    
+            return self.connection.cursor(as_dict=as_dict)
+        
         except Exception as ex:
             return f"Erro ao conectar ao banco de dados: {ex}"
 
