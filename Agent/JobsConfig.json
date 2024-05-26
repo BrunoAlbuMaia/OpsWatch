@@ -20,10 +20,10 @@
                     "parametros": []
                 },
                 "configDB": {
-                    "usuario": "sisdbFBTotvs",
-                    "senha": "515d3f3t0tv53kp",
-                    "database": "dbfbtopacesso",
-                    "serve": "SRVNAGbd01"
+                    "usuario": "",
+                    "senha": "",
+                    "database": "",
+                    "serve": ""
                 },
                 "comandos_pos_fechamento": [],
                 "comando_pos_abertura": []
