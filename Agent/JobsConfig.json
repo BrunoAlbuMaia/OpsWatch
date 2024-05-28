@@ -3,8 +3,8 @@
         {
             "id": 1,
             "nomeJOB": "Abrir e fechar monitoramento chrome",
-            "cron_time":"0 4 * * *",
-            "status": true,
+            "cron_time":"* * * * *",
+            "status": false,
             "plugins":{
                  
                 "fechar_exe":{
@@ -21,6 +21,15 @@
                     "config":{
                         "caminho_exe":"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
                         "description":"Caminho executavel para o arquivo google.exe"
+                    }
+                },
+                "call_api":{
+                    "nome_arquivo_plugin":"http",
+                    "nome_arquivo_hooks":"http_hooks",
+                    "config":{
+                        "method":"GET",
+                        "url":"https://viacep.com.br/ws/60532560/json/",
+                        "description":"Consumindo api para buscar dados de um CEP"
                     }
                 }
             }

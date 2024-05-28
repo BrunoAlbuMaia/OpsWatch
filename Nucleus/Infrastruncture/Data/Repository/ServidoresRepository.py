@@ -19,8 +19,14 @@ class ServidoresRepository(IServidoresRepository):
                     '''
             values = (hostname)
             cursor.execute(query,values)
-            resultado = cursor.fetchone()
+            row = cursor.fetchone()
+            if row:
+                columns = [column[0] for column in cursor.description]
+                resultado = dict(zip(columns, row))
+            else:
+                resultado = None
             return resultado
+        
         except Exception as ex:
             raise Exception(str(ex))
         finally:
