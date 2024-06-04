@@ -4,7 +4,11 @@ from Domain.Entities.JobsEntity import JobsEntity
 
 class IJobsRepository:
     @abstractmethod
-    async def consultar(self,nrServidorId:int):
+    async def consultarUrl(self,url:str):
+        pass
+    
+    @abstractmethod
+    async def consultarIp(self,nmIpServidor:str):
         pass
 
     @abstractmethod
@@ -12,5 +16,5 @@ class IJobsRepository:
         pass
 
     @abstractmethod
-    async def atualizar(self,nrServidorId:int,dados: Dict[str, Any]):
+    async def atualizar(self,url:str,dados: str):
         pass

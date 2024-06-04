@@ -9,30 +9,50 @@ class JobsRepository(IJobsRepository):
     def __init__(self,db:DbSession):
         self._db = db
 
-    async def consultar(self, nrServidorId: int):
+    async def consultarUrl(self, url: str):
         cursor = self._db.connect(as_dict=True)
         try:
             query = '''SELECT jsonConfig FROM Jobs
-                        WHERE nrServidorId = ?'''
-            values = (nrServidorId,)
+                        JOIN Servidores as Ser ON
+                        Ser.nrServidorId = Jobs.nrServidorId
+                        WHERE Ser.urlWebSocketJobs = %s'''
+            values = (url,)
             cursor.execute(query,values)
             resultado = cursor.fetchone()
             if resultado == None:
-                raise Exception('Não existe esse nrServidorId')
+                raise Exception('Não existe essa url')
 
             return resultado
         except Exception as ex:
             raise Exception(str(ex))
         finally:
             self._db.close()
-    
+
+    async def consultarIp(self,nmIpServidor:str):
+        cursor = self._db.connect(as_dict=True)
+        try:
+            query = '''SELECT jsonConfig FROM Jobs
+                        JOIN Servidores as Ser ON
+                        Ser.nrServidorId = Jobs.nrServidorId
+                        WHERE Ser.nmIpServidor = %s'''
+            values = (nmIpServidor,)
+            cursor.execute(query,values)
+            resultado = cursor.fetchone()
+            if resultado == None:
+                raise Exception('Não existe essa url')
+
+            return resultado
+        except Exception as ex:
+            raise Exception(str(ex))
+        finally:
+            self._db.close()
     async def registrarJson(self,dados:JobsEntity):
         cursor = self._db.connect()
         try:
             query = '''
                     INSERT INTO 
                     Jobs (nrServidorId,JsonConfig,dtCriacao,usuarioCriacao)
-                    WHERE (?,?,?,?)
+                    WHERE (%s,%s,%s,%s)
                     '''
             values = (dados.nrServidorId,dados.jsonConfig,dados.dtCriacao,dados.usuarioCriacao,)
             cursor.execute(query,values)
@@ -43,9 +63,20 @@ class JobsRepository(IJobsRepository):
             raise Exception(str(ex))
         finally:
             self._db.close()
-    async def atualizar(self, nrServidorId: int, dados: Dict[str, Any]):
+    async def atualizar(self, url: str, dados: str,):
+        cursor = self._db.connect()
         try:
-            pass
+            query = '''
+                    UPDATE Jobs
+                    SET jsonConfig = %s,
+                    dtAtualizacao = GETDATE(),
+                    usuarioAlteracao = %s
+                    FROM Jobs as J
+                    INNER JOIN Servidores as S ON s.urlWebSocketJobs = %s;
+                    '''
+            values = (dados,'sisdbIntegrador',url)
+            cursor.execute(query,values)
+            self._db.connection.commit()
         except Exception as ex:
             raise Exception(str(ex))
         finally:
