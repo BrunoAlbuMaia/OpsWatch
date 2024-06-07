@@ -34,6 +34,5 @@ class PluginManagerService(IPluginManagerService):
     async def execute_plugin_hook(self, name, hook_name, *args, **kwargs):
         if name in self.plugin_managers:
             return await self.plugin_managers[name].execute_hook(hook_name, *args, **kwargs)
-        else:
-            print(f"Plugin manager '{name}' não encontrado.")
-            return []
+        print(f"Plugin manager '{name}' não encontrado.")
+        return []

@@ -10,6 +10,12 @@ class ServidoresService(IServidoresService):
     def __init__(self,servidorRepositry: Type[IServidoresRepository]) -> None:
         self.__servidor = servidorRepositry
     
+    async def consultar(self,flAtivo=None):
+        try:
+            resultado = await self.__servidor.consultar(flAtivo)
+            return resultado
+        except Exception as ex:
+            raise Exception(str(ex))
     async def registrar(self,dados: ServidoresEntity):
         try:
             #vamos verificar se esse cara ja existe na nossa base

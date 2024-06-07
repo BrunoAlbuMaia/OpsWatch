@@ -5,3 +5,7 @@ pymssql
 requests
 websockets
 asyncio
+
+
+pyinstaller
+pyinstaller-hooks-contrib

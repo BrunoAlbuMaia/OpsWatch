@@ -1,6 +1,10 @@
 
 import asyncio
 import websockets
+from typing import List
+
+from functools import partial
+import json
 from Application.program import DependencyContainer
 
 class JobsController:
@@ -9,8 +13,6 @@ class JobsController:
         self.jobService = self.injection.jobService
         self.servidores = self.injection.servidorService
         self.json_configs = {}
-
-
 
     async def consultarIp(self,nmIpServidor:str):
         try:
@@ -47,6 +49,8 @@ class JobsController:
                             while True:
                                     
                                 response = await websocket.recv()
+                               
+
                                 if url not in self.json_configs:
                                     self.json_configs[url] = response
                                     await self.jobService.atualizar(url, response)
@@ -67,5 +71,5 @@ class JobsController:
                 await asyncio.sleep(5)
 
         # Criar uma tarefa assíncrona para cada URL de WebSocket
-        urls = await self.servidores.consultar(flAtivo=True)
+        urls = await self.servidores.consultar()
         await asyncio.gather(*(connect_to_websocket(url['urlWebSocketJobs']) for url in urls))

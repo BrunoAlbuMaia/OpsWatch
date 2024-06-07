@@ -2,6 +2,7 @@ fastapi[all]
 uvicorn[standard]
 starlette
 pydantic
+pika
 
 python-decouple
 psutil

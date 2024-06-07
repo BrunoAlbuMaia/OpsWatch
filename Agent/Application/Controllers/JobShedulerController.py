@@ -14,7 +14,7 @@ class JobShedulerController:
         'max_instances': 3,        # Limita o número de instâncias simultâneas de um job
         })
         self.jobService = self.injection.jobService
-        self.jobOpenClose = self.injection.jobOpenClose
+
         self.automacaoweb = self.injection.automacaoWeb
         self.plugin_manager_service = self.injection.pluginManager
 
@@ -69,23 +69,7 @@ class JobShedulerController:
             jobs.append(job_info)
         
         return jobs
-
-    async def executarJOB(self,res=None,id=None):
-        try:
-            if res == None:
-                res = await self.jobService.consultar_jobs_id(id)
-            
-            if res['tipo'] == 'chamar_api':
-                # await self.jobService.chamar_endpoint(res)
-                return 'Não implementado'
-            elif res['tipo'] == 'automacao_web':
-                # await self.jobService.automacao_contraktor(res)
-                await self.automacaoweb.execute_job(job=res)
-            else:
-                await self.jobOpenClose.execute_job(job=res)
-        except Exception as ex:
-            raise Exception(str(ex))
-    
+   
     async def executar_job_especifico(self, id:int):
         try:
             #vamos trazer o JSON desse cara, e enviar la pro PLUGIN
@@ -105,4 +89,4 @@ class JobShedulerController:
 
             return retornos
         except Exception as ex:
-            raise Exception(str(ex))
+            raise Exception(str(ex)) from ex

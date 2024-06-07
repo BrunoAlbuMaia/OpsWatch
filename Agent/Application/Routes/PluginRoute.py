@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
-from Application.Controllers.PluginController import PluginController
+from Application.Controllers import PluginController
 
 
 router = APIRouter(tags=['Plugin'])

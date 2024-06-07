@@ -8,6 +8,33 @@ from Infrastruncture.Data.Context.dbSession import DbSession
 class ServidoresRepository(IServidoresRepository):
     def __init__(self,db:DbSession):
         self._db = db
+
+    async def consultar(self, flAtivo=None):
+        cursor = self._db.connect(as_dict=True)
+        try:
+            if flAtivo is None:
+                # Se nenhum valor for passado, consulta todos os servidores
+                query = '''
+                    SELECT * FROM Servidores
+                '''
+                cursor.execute(query)
+            else:
+                # Consulta servidores com base no valor de flAtivo
+                query = '''
+                    SELECT * FROM Servidores
+                    WHERE flAtivo = %s
+                '''
+                cursor.execute(query, (flAtivo,))
+
+            resultado = cursor.fetchall()
+            if len(resultado) == 0:
+                raise Exception('Não existem servidores cadastrados')
+
+            return resultado
+        except Exception as e:
+            print(f"Erro ao consultar servidores: {e}")
+        finally:
+            cursor.close()
     
     async def consultar_por_hostname(self,hostname:str):
         cursor = self._db.connect(as_dict=True)
@@ -15,18 +42,12 @@ class ServidoresRepository(IServidoresRepository):
             query = '''
                     SELECT *
                     FROM Servidores
-                    WHERE nmServidor = ?
+                    WHERE nmServidor = %s
                     '''
-            values = (hostname)
+            values = (hostname,)
             cursor.execute(query,values)
-            row = cursor.fetchone()
-            if row:
-                columns = [column[0] for column in cursor.description]
-                resultado = dict(zip(columns, row))
-            else:
-                resultado = None
+            resultado = cursor.fetchone()
             return resultado
-        
         except Exception as ex:
             raise Exception(str(ex))
         finally:
@@ -38,7 +59,7 @@ class ServidoresRepository(IServidoresRepository):
             query = '''
                     INSERT INTO Servidores
                     (nmServidor,nmIpServidor,nmDescricao,urlWebsocketServidor,urlwebSocketJobs)
-                    VALUES(?,?,?,?,?)
+                    VALUES(%s,%s,%s,%s,%s)
                     '''
             values = (dados.nmServidor,dados.nmIpServidor,dados.nmDescricao,dados.urlWebsocketServidor,dados.urlWebSocketJobs)
 
@@ -58,13 +79,13 @@ class ServidoresRepository(IServidoresRepository):
         try:
             query = '''
                     UPDATE Servidores
-                    SET nmServidor = ?,
-                    nmIpServidor = ?,
-                    nmDescricao = ?,
-                    urlWebSocketServidor = ?,
-                    urlWebSocketJobs = ?,
-                    flAtivo = ?
-                    WHERE nrServidorId = ?
+                    SET nmServidor = %s,
+                    nmIpServidor = %s,
+                    nmDescricao = %s,
+                    urlWebSocketServidor = %s,
+                    urlWebSocketJobs = %s,
+                    flAtivo = %s
+                    WHERE nrServidorId = %s
                     '''
             values = (dados.nmServidor,
                       dados.nmIpServidor,

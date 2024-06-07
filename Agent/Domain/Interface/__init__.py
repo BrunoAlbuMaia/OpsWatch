@@ -1,1 +1,4 @@
 from .IJobBaseService import IJobBaseService
+from .IConfigServidorService import IConfigServidorService
+from .IJobsService import IJobsService
+from .IPluginManagerService import IPluginManagerService

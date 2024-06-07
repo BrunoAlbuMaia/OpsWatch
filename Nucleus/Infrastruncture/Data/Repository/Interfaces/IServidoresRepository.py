@@ -4,6 +4,9 @@ from Domain.Entities.ServidoresEntity import ServidoresEntity
 
 class IServidoresRepository:
     @abstractmethod
+    async def consultar(self,flAtivo=None):
+        pass
+    @abstractmethod
     async def consultar_por_hostname(self,hostname:str):
         pass
     @abstractmethod

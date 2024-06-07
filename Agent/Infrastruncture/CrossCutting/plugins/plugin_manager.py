@@ -41,5 +41,6 @@ class PluginManager:
             print(f"Hook '{hook_name}' não encontrado.")
             return []
         except Exception as e:
+            #vai para o arquivo de logue como ERRO
             print(f"Erro ao executar hook '{hook_name}': {e}")
             return []

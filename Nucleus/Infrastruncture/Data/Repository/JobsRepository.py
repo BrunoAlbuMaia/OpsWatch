@@ -72,7 +72,8 @@ class JobsRepository(IJobsRepository):
                     dtAtualizacao = GETDATE(),
                     usuarioAlteracao = %s
                     FROM Jobs as J
-                    INNER JOIN Servidores as S ON s.urlWebSocketJobs = %s;
+                    INNER JOIN Servidores as S ON s.nrServidorId = J.nrServidorId
+                    WHERE s.urlWebSocketJobs = %s;
                     '''
             values = (dados,'sisdbIntegrador',url)
             cursor.execute(query,values)

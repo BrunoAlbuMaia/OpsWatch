@@ -1,4 +1,4 @@
-from Application.Controllers.JobShedulerController import JobShedulerController
+from Application.Controllers import JobShedulerController
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 

@@ -9,6 +9,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from Application.Routes.JobsRoute import router as job
 from Application.Routes.ServidoresRoute import router as servidor
+from Application.Routes.DescricaoRoute import router as descricao
 from datetime import datetime
 # Configuração do logger
 logging.basicConfig(filename='app.log', level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
@@ -38,6 +39,7 @@ app.add_middleware(
 
 app.include_router(servidor,prefix='/Servidores')
 app.include_router(job,prefix='/Jobs')
+app.include_router(descricao,prefix='/Documentacao')
 
 
 
