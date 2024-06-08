@@ -2,7 +2,7 @@ from decouple import config
 from typing import Dict,Any
 
 from Domain.Entities.ServidoresEntity import ServidoresEntity
-from Infrastruncture.Data.Repository.Interfaces.IServidoresRepository import IServidoresRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IServidoresRepository import IServidoresRepository
 from Infrastruncture.Data.Context.dbSession import DbSession
 
 class ServidoresRepository(IServidoresRepository):

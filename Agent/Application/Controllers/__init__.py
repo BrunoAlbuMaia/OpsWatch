@@ -1,4 +1,4 @@
-from .ConfigurarServidorController import ConfigurarServidorController
+from .ServidorController import ServidorController
 from .JobsController import JobsController
 from .JobShedulerController import JobShedulerController
 from .PluginController import PluginController

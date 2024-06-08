@@ -34,10 +34,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(configServidor,prefix='/Servidor')
 app.include_router(jobs,prefix='/Jobs')
 app.include_router(jobsSheduler,prefix='/JobScheduler')
-
-app.include_router(configServidor,prefix='/Servidor')
 app.include_router(plugin,prefix='/Plugin')
 
 

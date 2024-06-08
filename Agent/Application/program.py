@@ -13,7 +13,9 @@ from Infrastruncture.Data.Repository.Json.Interfaces.IConfigServidorRepository i
 from Infrastruncture.Data.Repository.Json.ConfigServidorRepository import ConfigServidorRepository
 
 from Infrastruncture.Data.Repository.RabbitMQ.Interfaces.IRabbitConsumerRepository import IRabbitConsumerRepository
+from Infrastruncture.Data.Repository.RabbitMQ.Interfaces.IRabbitPublisherRepository import IRabbitPublisherRepository
 from Infrastruncture.Data.Repository.RabbitMQ.RabbitConsumerRepository import RabbitConsumerRepository
+from Infrastruncture.Data.Repository.RabbitMQ.RabbitPublisherRepository import RabbitPublisherRepository
 
 
 #CONECTION with DATA BASE
@@ -27,10 +29,11 @@ class DependencyContainer:
 
         __Configrepository:IConfigServidorRepository = ConfigServidorRepository()
         __JOBrepository:IJobsRepository = JobsRepository()
-        __rabbitRepository:IRabbitConsumerRepository = RabbitConsumerRepository(__rabbit)
+        __rabbitConsumerRepository:IRabbitConsumerRepository = RabbitConsumerRepository(__rabbit)
+        __rabbitPublishRepository:IRabbitPublisherRepository = RabbitPublisherRepository(__rabbit)
 
         
-        self.jobService:IJobsService = JobsService(__JOBrepository,__rabbitRepository)
+        self.jobService:IJobsService = JobsService(__JOBrepository,__rabbitConsumerRepository,__rabbitPublishRepository)
         self.configService:IConfigServidorService =  ConfigServidorService(__Configrepository)
 
 

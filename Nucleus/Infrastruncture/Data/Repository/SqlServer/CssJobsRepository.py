@@ -1,6 +1,6 @@
 from abc import ABCMeta
 from typing import Dict,Any
-from Infrastruncture.Data.Repository.Interfaces.ICssJobsRepository import ICssJobsRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.ICssJobsRepository import ICssJobsRepository
 from Infrastruncture.Data.Context.dbSession import DbSession
 
 

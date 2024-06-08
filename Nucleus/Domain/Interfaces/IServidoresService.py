@@ -11,7 +11,6 @@ class IServidoresService(ABC):
     async def registrar(self,dados:ServidoresEntity):
         pass
 
- 
     @abstractmethod
     async def atualizar(self,dados:ServidoresEntity):
         pass

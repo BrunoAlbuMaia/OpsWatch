@@ -1,6 +1,6 @@
 from Domain.Interfaces.IDescricacaoService import IDescricacaoService
 from Domain.Entities.DescricaoEntity import DescricaoEntity
-from Infrastruncture.Data.Repository.Interfaces.IDescricaoRepository import IDescricaoRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IDescricaoRepository import IDescricaoRepository
 
 
 class DescricaoService(IDescricacaoService):

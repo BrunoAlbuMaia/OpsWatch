@@ -2,7 +2,7 @@ from decouple import config
 from typing import Dict,Any
 
 from Domain.Entities.JobsEntity import JobsEntity
-from Infrastruncture.Data.Repository.Interfaces.IJobsRepository import IJobsRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IJobsRepository import IJobsRepository
 from Infrastruncture.Data.Context.dbSession import DbSession
 
 class JobsRepository(IJobsRepository):
@@ -63,7 +63,7 @@ class JobsRepository(IJobsRepository):
             raise Exception(str(ex))
         finally:
             self._db.close()
-    async def atualizar(self, url: str, dados: str,):
+    async def atualizar(self, nmIpServidor:str, dados: str,):
         cursor = self._db.connect()
         try:
             query = '''
@@ -73,9 +73,9 @@ class JobsRepository(IJobsRepository):
                     usuarioAlteracao = %s
                     FROM Jobs as J
                     INNER JOIN Servidores as S ON s.nrServidorId = J.nrServidorId
-                    WHERE s.urlWebSocketJobs = %s;
+                    WHERE s.nmIpServidor = %s;
                     '''
-            values = (dados,'sisdbIntegrador',url)
+            values = (dados,'sisdbIntegrador',nmIpServidor)
             cursor.execute(query,values)
             self._db.connection.commit()
         except Exception as ex:

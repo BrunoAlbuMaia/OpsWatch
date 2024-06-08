@@ -37,7 +37,7 @@ class ConfigServidorService(IConfigServidorService):
                 "nmServidor": hostname,
                 "nmIpServidor": ipv4_address,
                 "nmDescricao": "",
-                "urlWebsocketServidor": f"ws://{ipv4_address}:{config("port")}/Servidores/ws",
+                "urlWebsocketServidor": f"ws://{ipv4_address}:{config("port")}/Servidor/ws",
                 "urlWebSocketJobs": f"ws://{ipv4_address}:{config("port")}/Jobs/ws",
                 "flAtivo": True
 

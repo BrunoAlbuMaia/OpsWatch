@@ -2,7 +2,7 @@ import time
 from typing import Type,Dict,Any
 from Domain.Entities.ServidoresEntity import ServidoresEntity
 from Domain.Interfaces.IServidoresService import IServidoresService
-from Infrastruncture.Data.Repository.Interfaces.IServidoresRepository import IServidoresRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IServidoresRepository import IServidoresRepository
 
 
 

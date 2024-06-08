@@ -5,7 +5,7 @@ pymssql
 requests
 websockets
 asyncio
-
+pika
 
 pyinstaller
 pyinstaller-hooks-contrib

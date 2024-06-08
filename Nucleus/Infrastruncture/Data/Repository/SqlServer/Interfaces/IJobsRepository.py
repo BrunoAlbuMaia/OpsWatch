@@ -16,5 +16,5 @@ class IJobsRepository:
         pass
 
     @abstractmethod
-    async def atualizar(self,url:str,dados: str):
+    async def atualizar(self,nmIpServidor:str,dados: str):
         pass

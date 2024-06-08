@@ -1,7 +1,5 @@
 
-from Application.Controllers import ConfigurarServidorController
-from Domain.Entites.ConfigServidorEntity import ConfigServidorEntity
-from Infrastruncture.CrossCutting.plugins.plugin_manager import PluginManager
+from Application.Controllers.ServidorController import ServidorController
 
 
 from fastapi import APIRouter,WebSocket
@@ -11,7 +9,7 @@ from fastapi.exceptions import HTTPException
 import asyncio
 
 router  = APIRouter(tags=['Servidor'])
-__controller = ConfigurarServidorController()
+__controller = ServidorController()
 
 
 @router.on_event("startup")

@@ -1,4 +1,4 @@
-from Infrastruncture.Data.Repository.Interfaces.IDescricaoRepository import IDescricaoRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IDescricaoRepository import IDescricaoRepository
 from Domain.Entities.DescricaoEntity import DescricaoEntity
 from Infrastruncture.Data.Context.dbSession import DbSession
 

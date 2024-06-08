@@ -62,6 +62,6 @@ class JobsRepository(IJobsRepository):
             with open(self.file_path, 'w') as f:
                 json.dump(servico, f, indent=4)
             
-            return await self.get_dados_by_id(job['id'])
+            return await self.get_dados_by_id(job['id']),await self.get_dados()
         except Exception as ex:
             return str(ex)

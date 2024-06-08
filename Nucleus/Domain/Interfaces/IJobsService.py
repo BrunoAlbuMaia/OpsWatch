@@ -29,3 +29,7 @@ class IJobsService(ABC):
     async def atualizar(self, url:str,dados:str):
        pass
 
+    @abstractmethod 
+    async def consumindo_mensagem(self):
+        pass
+

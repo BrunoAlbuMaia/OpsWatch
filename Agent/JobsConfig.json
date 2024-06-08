@@ -2,7 +2,7 @@
     "jobs": [
         {
             "id": 1,
-            "nomeJOB": "Abrir e fechar monitoramento chrome",
+            "nomeJOB": "Abrir e fechar monitoramento FIREFOX",
             "cron_time": "03 19 * * *",
             "status": true,
             "plugins": {

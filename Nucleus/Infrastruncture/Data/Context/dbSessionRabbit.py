@@ -38,4 +38,5 @@ class DbSessionRabbitMQ:
             self.channel.close()
         if self.connection:
             self.connection.close()
-        print(' [*] Connection closed.')
+        print('[*] Connection closed.')
+

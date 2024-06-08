@@ -10,13 +10,14 @@ class RabbitConsumerRepository(IRabbitConsumerRepository):
         def __minha_chamada(ch, method, properties, body):
             try:
                 message_target_consumer  = properties.headers.get('apicentralizador') ## Isso deve ser fixo pois ele vai receber sempre no headers informando que e do centralizador
-                if message_target_consumer  == config('headersConsumidorJobs'): 
-                    # print(f" [x] Consumer 1 Received: {body}")
-                    callback(body,ch,method)
+                target_fixo:str = config('headersConsumidor')
+                if target_fixo in message_target_consumer : 
+                    ip = message_target_consumer.replace(f'{target_fixo},','')
+                    callback(body,ip,ch,method)
                 else:
                     ch.basic_reject(delivery_tag=method.delivery_tag, requeue=True)
             except Exception as ex:
-                raise Exception(str(ex))
+                raise Exception(str(ex))                
 
 
         channel = self._rabbit.connect()
@@ -28,7 +29,4 @@ class RabbitConsumerRepository(IRabbitConsumerRepository):
                                 on_message_callback=__minha_chamada)
             channel.start_consuming()
         except Exception as ex:
-            # sourcery skip: raise-specific-error
-            raise Exception(str(ex)) from ex
-        finally:
-            self._rabbit.close_connection()  
+            raise Exception(str(ex))

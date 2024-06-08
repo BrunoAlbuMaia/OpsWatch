@@ -1,15 +1,20 @@
 import time
 from typing import Type,Dict,Any
 from Domain.Interfaces.IJobsService import IJobsService
-from Infrastruncture.Data.Repository.Interfaces.IJobsRepository import IJobsRepository
+from Infrastruncture import IJobsRepository, IRabbitPublisherRepository,IRabbitConsumerRepository
 import json
+import threading
+import asyncio
 import requests as rs
 
 
 class JobsService(IJobsService):
-    def __init__(self,jobRepository: Type[IJobsRepository]) -> None:
+    def __init__(self,jobRepository: Type[IJobsRepository],rabbitConsumer:Type[IRabbitConsumerRepository],rabbitPublish: Type[IRabbitPublisherRepository]) -> None:
         self._job = jobRepository
-    
+        self._rabbitPublish = rabbitPublish
+        self.__rabbitConsumer = rabbitConsumer
+        self.__consumer_thread = None
+
     async def consultarUrl(self, url: str):
         try:
             resultado = await self._job.consultarUrl(url)
@@ -57,19 +62,14 @@ class JobsService(IJobsService):
             raise Exception(str(ex))
 
     async def atualizarAPI(self, nmIpServidor: str, dados:str):
+        '''Sera publicada uma mensagem para esse servidor, porem antes temos que ver se o cara esta ativo la na tabela servidores'''
         try:
-            
-           
-            headers = {
-                "Content-Type": "application/json"
-            }
+            await self._job.consultarIp(nmIpServidor) #verifica esse IP no servidor, se existir o codigo segue, se nao cai no excption
+            '''Padrao do consumidor {ip}_agente'''
+            mensagem = json.dumps(dados)
+            await self._rabbitPublish.enviar_mensagem(mensagem)
 
-            response = rs.patch('http://'+nmIpServidor+'/Jobs/api/jobs', json=dados,headers=headers)
-            if response.status_code == 200:
-                return True
-            else:
-                raise Exception(f"Nao foi possivel enviar esse JOB para o servidor. Status code: {response.status_code}")
-            
+            return 'Dados enviado para o agente'
         except Exception as ex:
             raise Exception(str(ex))
 
@@ -79,3 +79,20 @@ class JobsService(IJobsService):
         except Exception as ex:
             pass
   
+    async def consumindo_mensagem(self):
+        try:
+            if self.__consumer_thread is None or not self.__consumer_thread.is_alive():
+                self.__consumer_thread = threading.Thread(target=self.__rabbitConsumer.iniciar_consumidor, args=('apicentralizador',self.__on_message_received,))
+                self.__consumer_thread.start()
+                print('Consumer thread started.')
+        except Exception as ex:
+            raise Exception(str(ex))
+        
+    def __on_message_received(self, message,ip,ch,method): 
+        try:
+            mensagem = message.decode('utf8')
+            # mensagemJson =json.loads(mensagem)
+            asyncio.run(self._job.atualizar(ip,mensagem))
+            ch.basic_ack(delivery_tag=method.delivery_tag)
+        except Exception as ex:
+            raise Exception(str(ex))    

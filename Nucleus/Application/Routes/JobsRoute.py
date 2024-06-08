@@ -10,10 +10,9 @@ router  = APIRouter(tags=['Jobs'])
 __controller = JobsController()
 
 
-# Background task to run the WebSocket client
 @router.on_event("startup")
 async def startup_event():
-    asyncio.create_task(__controller.connect_to_websockets())
+    await __controller.ativar_consumidorJobs()
 
 
 @router.get('/api/jobs/{nmIpServidor}')
@@ -30,13 +29,12 @@ async def consultarjobs(nmIpServidor:str,jobId:int):
     except Exception as ex:
         return JSONResponse(content={'mensagem':str(ex)},status_code=404)
 
-@router.post('/api/jobs/{nmIpServidor}')
-async def registrarjobs(nmIpServidor:str,dados:Dict[str,Any]):
-    try:
-        pass
-        return await __controller.nmIpServidor(nmIpServidor,dados)
-    except Exception as ex:
-        return JSONResponse(content={'mensagem':str(ex)},status_code=404)
+# @router.post('/api/jobs/{nmIpServidor}')
+# async def registrarjobs(nmIpServidor:str,dados:Dict[str,Any]):
+#     try:
+#         return await __controller.nmIpServidor(nmIpServidor,dados)
+#     except Exception as ex:
+#         return JSONResponse(content={'mensagem':str(ex)},status_code=404)
 
 @router.patch('/api/jobs/{nmIpServidor}')
 async def atualizarjobs(nmIpServidor:str,dados:Dict[str,Any]):
