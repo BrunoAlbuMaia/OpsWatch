@@ -8,8 +8,8 @@ import requests as rs
 from decouple import config
 from Domain.Entites.ConfigServidorEntity import ConfigServidorEntity
 from Domain.Interface.IConfigServidorService import IConfigServidorService
-from Infrastruncture.Data.Repository.IConfigServidorRepository import IConfigServidorRepository
-from Infrastruncture.Data.Repository.ConfigServidorRepository import ConfigServidorRepository
+from Infrastruncture.Data.Repository.Json.Interfaces.IConfigServidorRepository import IConfigServidorRepository
+from Infrastruncture.Data.Repository.Json.ConfigServidorRepository import ConfigServidorRepository
 
 
 class ConfigServidorService(IConfigServidorService):
@@ -37,7 +37,7 @@ class ConfigServidorService(IConfigServidorService):
                 "nmServidor": hostname,
                 "nmIpServidor": ipv4_address,
                 "nmDescricao": "",
-                "urlWebsocketServidor": f"ws://{ipv4_address}:{config("port")}/Servidores/ws",
+                "urlWebsocketServidor": f"ws://{ipv4_address}:{config("port")}/Servidor/ws",
                 "urlWebSocketJobs": f"ws://{ipv4_address}:{config("port")}/Jobs/ws",
                 "flAtivo": True
 

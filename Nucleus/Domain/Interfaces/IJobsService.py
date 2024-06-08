@@ -7,18 +7,29 @@ from typing import Dict,Any
 class IJobsService(ABC):
 
     @abstractmethod
-    async def consultar(self,nrServidorId:int):
-        pass
-    
-    @abstractmethod
-    async def consultarId(self,nrServidorId:int,jobId:int):
+    async def consultarUrl(self,url:str):
         pass
 
     @abstractmethod
-    async def registrar(self,nrServidorId:int,dados:Dict[str,Any]):
+    async def consultarIp(self,nmIpServidor:str):
+        pass
+    @abstractmethod
+    async def consultarId(self,nmIpServidor:str,jobId:int):
         pass
 
     @abstractmethod
-    async def atualizar(self, nrServidorId:int,dados:Dict[str,Any]):
+    async def registrarAPI(self, nmIpServidor: str, dados:str):
+        pass
+
+    @abstractmethod
+    async def atualizarAPI(self, nmIpServidor: str, dados:str):
+        pass
+
+    @abstractmethod
+    async def atualizar(self, url:str,dados:str):
        pass
+
+    @abstractmethod 
+    async def consumindo_mensagem(self):
+        pass
 

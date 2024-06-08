@@ -21,3 +21,7 @@ class IJobsService(ABC):
     @abstractmethod
     async def inserir_job(self,job:Dict[str,Any]):
         pass
+
+    @abstractmethod
+    async def consumindo_mensagem(self):
+        pass

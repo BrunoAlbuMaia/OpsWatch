@@ -2,60 +2,35 @@
     "jobs": [
         {
             "id": 1,
-            "nomeJOB": "Abrir e fechar monitoramento TOPAcesso",
-            "tipo": "open_close",
+            "nomeJOB": "Abrir e fechar monitoramento FIREFOX",
+            "cron_time": "03 19 * * *",
             "status": true,
-            "detalhes": {
-                "tempExecucao": "0 4 * * *",
-                "ultAlteracao": "26/03/2024 05:30",
-                "caminhoExecutavel": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsCalculator_11.2401.0.0_x64__8wekyb3d8bbwe\\CalculatorApp.exe",
-                "nomeExecutavel": "CalculatorApp.exe",
-                "tmpEsperaSegundos": 1,
-                "preExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
+            "plugins": {
+                "fechar_exe": {
+                    "nome_arquivo_plugin": "openClose",
+                    "nome_arquivo_hooks": "openClose_hooks",
+                    "config": {
+                        "nome_exe": "firefox.exe",
+                        "description": "Esse \u00e9 o nome do executavel que ele vai fechar, pela tela de GERENCIADOR DE TAREFAS"
+                    }
                 },
-                "posExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
+                "abrir_exe": {
+                    "nome_arquivo_plugin": "openClose",
+                    "nome_arquivo_hooks": "openClose_hooks",
+                    "config": {
+                        "caminho_exe": "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+                        "description": "Caminho executavel para o arquivo google.exe"
+                    }
                 },
-                "configDB": {
-                    "usuario": "",
-                    "senha": "",
-                    "database": "",
-                    "serve": ""
-                },
-                "comandos_pos_fechamento": [],
-                "comando_pos_abertura": []
-            }
-        },
-        {
-            "id": 2,
-            "nomeJOB": "Abrir e fechar monitoramento TOP ACESSO",
-            "tipo": "open_close",
-            "status": true,
-            "detalhes": {
-                "tempExecucao": "15 21 * * *",
-                "ultAlteracao": "26/03/2024 05:30",
-                "caminhoExecutavel": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsCalculator_11.2401.0.0_x64__8wekyb3d8bbwe\\CalculatorApp.exe",
-                "nomeExecutavel": "CalculatorApp.exe",
-                "tmpEsperaSegundos": 1,
-                "preExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
-                },
-                "posExecProc": {
-                    "nomeProc": "",
-                    "parametros": []
-                },
-                "configDB": {
-                    "usuario": "sisdbFBTotvs",
-                    "senha": "515d3f3t0tv53kp",
-                    "database": "dbfbtopacesso",
-                    "serve": "SRVNAGbd01"
-                },
-                "comandos_pos_fechamento": [],
-                "comando_pos_abertura": []
+                "call_api": {
+                    "nome_arquivo_plugin": "http",
+                    "nome_arquivo_hooks": "http_hooks",
+                    "config": {
+                        "method": "GET",
+                        "url": "https://viacep.com.br/ws/60532560/json/",
+                        "description": "Consumindo api para buscar dados de um CEP"
+                    }
+                }
             }
         }
     ]

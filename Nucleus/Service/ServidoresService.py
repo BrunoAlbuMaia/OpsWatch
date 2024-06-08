@@ -2,7 +2,7 @@ import time
 from typing import Type,Dict,Any
 from Domain.Entities.ServidoresEntity import ServidoresEntity
 from Domain.Interfaces.IServidoresService import IServidoresService
-from Infrastruncture.Data.Repository.Interfaces.IServidoresRepository import IServidoresRepository
+from Infrastruncture.Data.Repository.SqlServer.Interfaces.IServidoresRepository import IServidoresRepository
 
 
 
@@ -10,6 +10,12 @@ class ServidoresService(IServidoresService):
     def __init__(self,servidorRepositry: Type[IServidoresRepository]) -> None:
         self.__servidor = servidorRepositry
     
+    async def consultar(self,flAtivo=None):
+        try:
+            resultado = await self.__servidor.consultar(flAtivo)
+            return resultado
+        except Exception as ex:
+            raise Exception(str(ex))
     async def registrar(self,dados: ServidoresEntity):
         try:
             #vamos verificar se esse cara ja existe na nossa base

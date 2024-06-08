@@ -2,6 +2,7 @@ fastapi[all]
 uvicorn[standard]
 starlette
 pydantic
+pika
 
 python-decouple
 psutil
@@ -15,5 +16,4 @@ selenium
 
 pyinstaller
 pyinstaller-hooks-contrib
-
-
+pluggy

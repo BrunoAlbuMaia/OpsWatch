@@ -10,6 +10,7 @@ urlWebSocketJobs VARCHAR(100) NULL,
 flAtivo BIT DEFAULT  1
 )
 
+
 ----- JOBS -----
 CREATE TABLE Jobs(
 nrServidorId  INT NOT NULL,
@@ -21,9 +22,28 @@ usuarioAlteracao VARCHAR(20),
 FOREIGN KEY (nrServidorId) REFERENCES Servidores(nrServidorId)
 )
 
-CREATE TABLE CssReplicJobs(
-nrServidorId  INT NOT NULL,
-jsonConfig VARCHAR(MAX),
-dtGravada DATETIME
-)
+
+
+---Description dos PLUGINS ---
+CREATE TABLE Descriptions(
+nrDescriptionId INT IDENTITY(1,1) PRIMARY KEY,
+nmChavePlugin VARCHAR(30) NOT NULL,
+nmJsonPlugin VARCHAR(800) NOT NULL,
+descricao VARCHAR(500) NOT NULL
+);
+
+
+
+CREATE TRIGGER after_insert_servidores
+ON Servidores
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Jobs (nrServidorId, dtCriacao, usuarioCriacao)
+    SELECT 
+        inserted.nrServidorId, 
+        GETDATE(), 
+        'dbIntegrador'
+    FROM inserted;
+END;
 

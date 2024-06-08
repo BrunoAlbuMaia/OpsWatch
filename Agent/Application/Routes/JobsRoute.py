@@ -1,4 +1,4 @@
-from Application.Controllers.JobsController import JobsController
+from Application.Controllers import JobsController
 from Domain.Entites.jobEntity import Job
 from fastapi import APIRouter,WebSocket,WebSocketDisconnect
 from typing import Dict,Any,List
@@ -12,32 +12,34 @@ __controller = JobsController()
 # Lista para armazenar as conexões dos clientes
 connections:List[WebSocket] = []
 
-@router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
 
-    connections.append(websocket)
-    last_state = None
+# @router.websocket("/ws")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket.accept()
 
-    try:
-        while True:
-            resultado = await __controller.websocket_job(websocket,connections)
+#     connections.append(websocket)
+#     last_state = None
+
+#     try:
+#         while True:
+#             resultado = await __controller.websocket_job(websocket,connections)
            
 
-            if resultado != last_state:
-                last_state = resultado
-                for connection in connections:
-                    await connection.send_text(str(resultado))
+#             if resultado != last_state:
+#                 last_state = resultado
+#                 for connection in connections:
+#                     await connection.send_text(resultado)
             
-            await asyncio.sleep(1)  # Espere 1 segundo antes de enviar a próxima mensagem
-    except WebSocketDisconnect:
-        print("WebSocket desconectado.")
-    except Exception as e:
-        print(f"Erro no WebSocket: {e}")
-    finally:
-        connections.remove(websocket)
-  
-
+#             await asyncio.sleep(1)  # Espere 1 segundo antes de enviar a próxima mensagem
+#     except WebSocketDisconnect:
+#         print("WebSocket desconectado.")
+#     except Exception as e:
+#         print(f"Erro no WebSocket: {e}")
+#     finally:
+#         connections.remove(websocket)
+@router.on_event("startup")
+async def start_scheduler():
+    return await __controller.start_consumidor()
 
 
 #ENDPOINTs    

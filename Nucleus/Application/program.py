@@ -1,29 +1,21 @@
-#CAMADA SERVICE
-from Domain.Interfaces.IJobsService import IJobsService
-from Domain.Interfaces.IServidoresService import IServidoresService
 
-from Service.JobService import JobsService
-from Service.ServidoresService import ServidoresService
-
-# CAMADA DE BANCO DE DADOS
-from Infrastruncture.Data.Repository.Interfaces.IJobsRepository import IJobsRepository
-from Infrastruncture.Data.Repository.Interfaces.IServidoresRepository import IServidoresRepository
-
-from Infrastruncture.Data.Repository.JobsRepository import JobsRepository
-from Infrastruncture.Data.Repository.ServidoresRepository import ServidoresRepository
-
-
-#CONECTION with DATA BASE
-from Infrastruncture.Data.Context.dbSession import DbSession
+from Domain import IJobsService,IServidoresService,IDescricacaoService
+from Service import JobsService,ServidoresService,DescricaoService
+from Infrastruncture import IJobsRepository,IServidoresRepository,IDescricaoRepository,IRabbitPublisherRepository,IRabbitConsumerRepository,JobsRepository,ServidoresRepository,DescricaoRepository,RabbitPublisherRepository,RabbitConsumerRepository
+from Infrastruncture import DbSession,DbSessionRabbitMQ
 
 class DependencyContainer:
     def __init__(self):
         __db = DbSession()
+        __rabbit = DbSessionRabbitMQ()
 
         __JOBrepository:IJobsRepository = JobsRepository(__db)
         __ServidorRepository:IServidoresRepository = ServidoresRepository(__db)
-
-        self.jobService:IJobsService = JobsService(__JOBrepository)
+        __DescricaoRepository:IDescricaoRepository = DescricaoRepository(__db)
+        __rabbitRepository:IRabbitPublisherRepository = RabbitPublisherRepository(__rabbit)
+        __rabbitConsumerRepository:IRabbitConsumerRepository = RabbitConsumerRepository(__rabbit)
+        self.jobService:IJobsService = JobsService(__JOBrepository,__rabbitConsumerRepository,__rabbitRepository)
         self.servidorService:IServidoresService = ServidoresService(__ServidorRepository)
+        self.descricaoService:IDescricacaoService = DescricaoService(__DescricaoRepository)
 
         

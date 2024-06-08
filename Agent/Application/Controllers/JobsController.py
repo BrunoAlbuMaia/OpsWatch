@@ -2,6 +2,7 @@ from fastapi.websockets import WebSocket
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from functools import partial
+import json
 
 from Application.program import DependencyContainer
 from Domain.Entites.jobEntity import Job    
@@ -29,16 +30,20 @@ class JobsController:
         resultado = await self.jobService.atualizar_configuracao(dados)
         return resultado
 
-    async def websocket_job(self,websocket:WebSocket,connection):
-        try:
-            # data = await websocket.receive_text()
+
+    async def start_consumidor(self):
+        return await self.jobService.consumindo_mensagem()
+    # async def websocket_job(self,websocket:WebSocket,connection):
+    #     try:
             
-            resultado = await self.obter_configuration()
-            resultado = resultado['jobs']
-            # print(f"Received message: {data}")
-            return resultado
-        except Exception as ex:
-            raise Exception(str(ex))
+    #         resultado = await self.obter_configuration()
+    #         # print(f"Received message: {data}")
+    #         jobs_str = json.dumps(resultado['jobs'], indent=4)
+    #         return jobs_str
+    #     except Exception as ex:
+    #         raise Exception(str(ex))
+        
+
 
    
 
