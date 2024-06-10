@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import GraficosServidor from './graficoServidor';
-import Jobs from '../../Jobs/JobsJson';
+import GraficosServidor from '../Servidores/graficoServidor';
+import Jobs from '../Jobs';
 
 
 const DetalhesServidor = () => {

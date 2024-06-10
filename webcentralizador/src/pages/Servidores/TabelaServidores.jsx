@@ -33,7 +33,7 @@ function TabelaServidores({servers,columns}) {
           </span>
         </td>
         <td className="py-3 px-6 text-left">
-          <Link to={`/detalheServidor/${server.nrServidorId}`}>
+          <Link to={`/detalheServidor/${server.nmIpServidor}`}>
           <button className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
             Verificar
           </button>

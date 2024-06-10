@@ -13,7 +13,7 @@ pathex = [
     project_root,
     os.path.join(project_root, 'Application'),
     os.path.join(project_root, 'Domain'),
-    os.path.join(project_root, 'Infra'),
+    os.path.join(project_root, 'Infrastruncture'),
     os.path.join(project_root, 'Service'),
 ]
 

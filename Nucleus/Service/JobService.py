@@ -66,8 +66,9 @@ class JobsService(IJobsService):
         try:
             await self._job.consultarIp(nmIpServidor) #verifica esse IP no servidor, se existir o codigo segue, se nao cai no excption
             '''Padrao do consumidor {ip}_agente'''
+            destino = f'{nmIpServidor}_agenteJobs'
             mensagem = json.dumps(dados)
-            await self._rabbitPublish.enviar_mensagem(mensagem)
+            await self._rabbitPublish.enviar_mensagem(destino,mensagem)
 
             return 'Dados enviado para o agente'
         except Exception as ex:
@@ -91,7 +92,6 @@ class JobsService(IJobsService):
     def __on_message_received(self, message,ip,ch,method): 
         try:
             mensagem = message.decode('utf8')
-            # mensagemJson =json.loads(mensagem)
             asyncio.run(self._job.atualizar(ip,mensagem))
             ch.basic_ack(delivery_tag=method.delivery_tag)
         except Exception as ex:

@@ -5,7 +5,7 @@ import JSONPretty from 'react-json-prettify';
 import ResponsiveModal from '../../components/Modal'
 import PluginInfo from './pluginInfo';
 
-const Jobs = () => {
+const JobJson = () => {
   const [modalOpen, setModalOpen] = useState(false); // Estado para controlar se o modal está aberto
   const [selectedPluginKey,setSelectedPluginKey] = useState()
   
@@ -148,4 +148,4 @@ const Jobs = () => {
   );
 };
 
-export default Jobs;
+export default JobJson;

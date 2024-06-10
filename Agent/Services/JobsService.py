@@ -45,7 +45,7 @@ class JobsService(IJobsService):
         try:
             mensagemJson =json.loads(message.decode('utf8'))
             asyncio.run(self.__jobRepository.update_dados(mensagemJson))
-            # ch.basic_ack(delivery_tag=method.delivery_tag)
+            ch.basic_ack(delivery_tag=method.delivery_tag)
         except Exception as ex:
             ch.basic_nack(delivery_tag=method.delivery_tag)  # Rejeitar a mensagem em caso de erro
             print(f"Error processing message: {str(ex)}")
