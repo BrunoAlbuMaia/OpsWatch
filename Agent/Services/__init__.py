@@ -1,4 +1,0 @@
-from .AutomacaoWebService import AutomacaoWebService
-from .ConfigServidorService import ConfigServidorService
-from .JobsService import JobsService
-from .PluginManagerService import PluginManagerService
